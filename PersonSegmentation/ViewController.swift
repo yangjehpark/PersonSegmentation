@@ -60,12 +60,10 @@ class ViewController: UIViewController {
         guard let personMask = requestPersonMask(sourceImage: sourceImage), let inputCGImage = sourceImage.cgImage else { return (nil, sourceImage) }
         let inputImage = CIImage(cgImage: inputCGImage)
 
-        var scaledPersonMaskImage: CIImage {
-            let maskImage = CIImage(cvPixelBuffer: personMask.pixelBuffer)
-            let maskScaleX = inputImage.extent.width / maskImage.extent.width
-            let maskScaleY = inputImage.extent.height / maskImage.extent.height
-            return maskImage.transformed(by: __CGAffineTransformMake(maskScaleX, 0, 0, maskScaleY, 0, 0))
-        }
+        let maskImage = CIImage(cvPixelBuffer: personMask.pixelBuffer)
+        let maskScaleX = inputImage.extent.width / maskImage.extent.width
+        let maskScaleY = inputImage.extent.height / maskImage.extent.height
+        let scaledPersonMaskImage: CIImage = maskImage.transformed(by: __CGAffineTransformMake(maskScaleX, 0, 0, maskScaleY, 0, 0))
 
         var croppingPersonMaskFilter: CIFilter & CIBlendWithMask {
             let blendFilter = CIFilter.blendWithMask()
