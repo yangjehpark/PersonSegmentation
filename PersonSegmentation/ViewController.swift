@@ -47,8 +47,8 @@ class ViewController: UIViewController {
             let request = VNGeneratePersonSegmentationRequest()
             request.qualityLevel = .accurate
             request.outputPixelFormat = kCVPixelFormatType_OneComponent8
+            let handler = VNImageRequestHandler(cgImage: sourceImage.cgImage!, options: [:])
             do {
-                let handler = VNImageRequestHandler(cgImage: sourceImage.cgImage!, options: [:])
                 try handler.perform([request])
                 return request.results!.first!
             } catch {
